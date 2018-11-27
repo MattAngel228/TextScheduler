@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             /*
             mTextMessage.setText(R.string.title_schedule);
             return true;
-            */
+            *///
 
             if (id == R.id.navigation_home) {
                 mTextMessage.setText(R.string.title_home);
