@@ -14,6 +14,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    public String test = "Test";
+
     private TextView mTextMessage;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             int id = item.getItemId();
+
             /*
             mTextMessage.setText(R.string.title_schedule);
             return true;
