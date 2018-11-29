@@ -50,7 +50,7 @@ public class TextHandler {
      * If so, sends text and removes it from list.
      * Checks for every Text Message object that has the current sendDate.
      */
-    private static void checkMessage() {
+    public static void checkMessage() {
         Date current = new Date();
         if (current == TextMessage.toSend.get(0).getSendDate()) {
             TextMessage.sendMessage(TextMessage.toSend.get(0));

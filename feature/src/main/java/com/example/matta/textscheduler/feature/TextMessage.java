@@ -37,6 +37,27 @@ public class TextMessage {
         TextHandler.addToList(this,toSend);
     }
 
+    public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
+        Date current = new Date();
+        int numeric;
+        //Invalid ranges
+        try {
+            Date testDate = new Date(year, month, day, hour, minute);
+            numeric = Integer.parseInt(phoneNumber);
+        } catch (Exception e) {
+            return false;
+        }
+        Date setDate = new Date(year, month, day, hour, minute);
+        if (message == null || phoneNumber.length() != 10) {
+            return false;
+        //Date in the past.
+        } else if (setDate.before(current)) {
+            return false;
+        }
+        new TextMessage(year, month - 1, day, hour, minute, phoneNumber, message);
+        return true;
+    }
+
     /**
      * Sends message.
      * @param source Text Message object being sent.
