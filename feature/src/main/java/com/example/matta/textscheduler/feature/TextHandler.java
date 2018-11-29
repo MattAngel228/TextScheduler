@@ -1,7 +1,13 @@
 package com.example.matta.textscheduler.feature;
+import android.util.Log;
+
 import java.util.List;
 import java.util.Date;
+import java.util.logging.*;
 import java.util.logging.Handler;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * Class to handle when to send messages and how to store Text Message objects.
@@ -27,11 +33,32 @@ public class TextHandler {
         }
     }
     //This should be how we test the dates. Still a work in progress.
+    /*
     private Runnable updateData = new Runnable(){
         public void run(){
+            checkMessage();
             //call the service here
             ////// set the interval time here
             //handler.postDelayed(updateData,delay);
         }
     };
+    Timer timerOne = new Timer();
+    TimerTask checkTask = new TimerScheduleFixedRateDelay();
+    */
+    /**
+     * Checks if the first Text Message object's date is equal to current date.
+     * If so, sends text and removes it from list.
+     * Checks for every Text Message object that has the current sendDate.
+     */
+    private static void checkMessage() {
+        Date current = new Date();
+        if (current == TextMessage.toSend.get(0).getSendDate()) {
+            TextMessage.sendMessage(TextMessage.toSend.get(0));
+            TextMessage.toSend.remove(0);
+            while (current == TextMessage.toSend.get(0).getSendDate()) {
+                TextMessage.sendMessage(TextMessage.toSend.get(0));
+                TextMessage.toSend.remove(0);
+            }
+        }
+    }
 }

@@ -18,7 +18,7 @@ public class TextMessage {
     private Date sendDate;
     private String phoneNumber;
     private String message;
-    public List<TextMessage> toSend = new ArrayList<TextMessage>();
+    public static List<TextMessage> toSend = new ArrayList<TextMessage>();
 
     /**
      * Constructor for text message.
