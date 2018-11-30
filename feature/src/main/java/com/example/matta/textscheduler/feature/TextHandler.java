@@ -32,19 +32,7 @@ public class TextHandler {
             }
         }
     }
-    //This should be how we test the dates. Still a work in progress.
-    /*
-    private Runnable updateData = new Runnable(){
-        public void run(){
-            checkMessage();
-            //call the service here
-            ////// set the interval time here
-            //handler.postDelayed(updateData,delay);
-        }
-    };
-    Timer timerOne = new Timer();
-    TimerTask checkTask = new TimerScheduleFixedRateDelay();
-    */
+
     /**
      * Checks if the first Text Message object's date is equal to current date.
      * If so, sends text and removes it from list.

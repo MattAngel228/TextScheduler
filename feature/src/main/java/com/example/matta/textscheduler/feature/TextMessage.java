@@ -37,17 +37,28 @@ public class TextMessage {
         TextHandler.addToList(this,toSend);
     }
 
+    /**
+     * Tests provided parameters. Creates a new Text Message object if parameters are valid.
+     * @param year Provided year (year - 1900).
+     * @param month Provided month (0-11).
+     * @param day Provided day (1-31).
+     * @param hour Provided hour (0-23).
+     * @param minute Provided minute (0-59).
+     * @param phoneNumber Provided phone number "##########".
+     * @param message Message.
+     * @return true if Text Message object was created, false if invalid parameter.
+     */
     public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
         Date current = new Date();
         int numeric;
         //Invalid ranges
         try {
-            Date testDate = new Date(year, month, day, hour, minute);
+            Date testDate = new Date(year, month - 1, day, hour, minute);
             numeric = Integer.parseInt(phoneNumber);
         } catch (Exception e) {
             return false;
         }
-        Date setDate = new Date(year, month, day, hour, minute);
+        Date setDate = new Date(year, month - 1, day, hour, minute);
         if (message == null || phoneNumber.length() != 10) {
             return false;
         //Date in the past.
