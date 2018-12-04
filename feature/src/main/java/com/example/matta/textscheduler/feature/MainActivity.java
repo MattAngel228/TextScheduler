@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TimerHandler.startTimer();
 
         //mTextMessage = (TextView) findViewById(R.id.message);
         //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
             isPM = (boolean) amORpm.isChecked();
             if (isPM) {
                 hour += 12;
+                if (hour == 24) {
+                    hour = 0;
+                }
             }
         } catch (Exception e) {
             //time is invalid
@@ -128,10 +132,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (!error) {
             //make it into a text message
-            errorMessage.setVisibility(View.INVISIBLE);
+            if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
+                errorMessage.setText("Invalid input");
+            } else {
+                TextMessage.create(year, month, day, hour, minute, number, message);
+                setContentView(R.layout.activity_main);
+            }
 
-            //return to main screen
-            setContentView(R.layout.activity_main);
+
         } else {
             //display error
             errorMessage.setVisibility(View.VISIBLE);
