@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 //Change
 import java.util.List;
@@ -59,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int day, month, year, hour, minute;
+    private boolean isPM;
     private String dateGiven;
-    private String timeFrame;
+    private Switch amORpm;
     private String number;
     private String message;
     private EditText dateInput;
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText hourInput;
     private EditText minuteInput;
     private EditText timeFrameInput;
+    private TextView errorMessage;
 
 
     public void scheduleMessage(View view)
@@ -79,54 +82,59 @@ public class MainActivity extends AppCompatActivity {
         messageInput = (EditText) findViewById(R.id.editMessage);
         hourInput = (EditText) findViewById(R.id.editHour);
         minuteInput = (EditText) findViewById(R.id.editMinute);
-        timeFrameInput = (EditText) findViewById(R.id.editTimeZone);
+        amORpm = (Switch) findViewById(R.id.switch1);
+        errorMessage = (TextView) findViewById(R.id.errorMessage);
 
     }
     public void saveMessage(View view) {
 
         boolean error = false;
+
         dateGiven = dateInput.getText().toString();
         try {
             day = Integer.valueOf(dateGiven.substring(0,2));
             month = Integer.valueOf(dateGiven.substring(3,5));
             year = Integer.valueOf(dateGiven.substring(6));
         } catch (Exception e) {
-            //date is invalid
+            errorMessage.setText("Date is invalid");
             error = true;
         }
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
             minute = Integer.valueOf(hourInput.getText().toString());
-            timeFrame = timeFrameInput.getText().toString().toLowerCase().replaceAll("\\s","");
-            if (timeFrame.equals("pm")) {
+            isPM = (boolean) amORpm.isChecked();
+            if (isPM) {
                 hour += 12;
             }
         } catch (Exception e) {
             //time is invalid
+            errorMessage.setText("Time is invalid");
             error = true;
         }
 
-        try {
-            number = numberInput.getText().toString();
-        } catch (Exception e) {
-            //number is invalid
+        number = numberInput.getText().toString();
+        if (number.length() == 0) {
+            errorMessage.setText("Number is invalid");
             error = true;
         }
-        try {
-            message = messageInput.getText().toString();
-        } catch (Exception e) {
-            //message is invalid
+
+        message = messageInput.getText().toString();
+        if (message.length() == 0) {
+            errorMessage.setText("Message is invalid");
             error = true;
         }
+
+
 
         if (!error) {
             //make it into a text message
-
+            errorMessage.setVisibility(View.INVISIBLE);
 
             //return to main screen
             setContentView(R.layout.activity_main);
         } else {
             //display error
+            errorMessage.setVisibility(View.VISIBLE);
         }
 
     }

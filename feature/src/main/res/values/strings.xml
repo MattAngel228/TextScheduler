@@ -13,5 +13,7 @@
     <string name="Save">Save</string>
     <string name="hour">hour(3)</string>
     <string name="minute">minute(37)</string>
-    <string name="timeZone">(AM/PM)</string>
+    <string name="switchOption1">AM</string>
+    <string name="switchOption2">PM</string>
+
 </resources>
