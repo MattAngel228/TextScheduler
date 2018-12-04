@@ -11,7 +11,7 @@ public class TimerHandler {
     /**
      * Initializes the timer and checks every minute.
      */
-    public void startTimer() {
+    public static void startTimer() {
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             public void run() {
