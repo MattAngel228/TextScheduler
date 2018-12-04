@@ -40,7 +40,7 @@ public class TextHandler {
      */
     public static void checkMessage() {
         Date current = new Date();
-        if (current == TextMessage.toSend.get(0).getSendDate()) {
+        if (TextMessage.toSend.size() > 0 && current == TextMessage.toSend.get(0).getSendDate()) {
             TextMessage.sendMessage(TextMessage.toSend.get(0));
             TextMessage.toSend.remove(0);
             while (current == TextMessage.toSend.get(0).getSendDate()) {
