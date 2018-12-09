@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //af
+
+
         if (!error) {
             //make it into a text message
             if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
