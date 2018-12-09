@@ -108,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
             errorMessage.setText("Time is invalid");
             error = true;
         }
-        hour = hour - 1;
-        minute = minute - 1;
+
 
         number = numberInput.getText().toString();
         if (number.length() != 10) {
