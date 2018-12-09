@@ -50,11 +50,11 @@ public class TextMessage {
      */
     public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
         Date current = new Date();
-        int numeric;
+        long numeric;
         //Invalid ranges
         try {
             Date testDate = new Date(year, month - 1, day, hour, minute);
-            numeric = Integer.parseInt(phoneNumber);
+            numeric = Long.parseLong(phoneNumber);
         } catch (Exception e) {
             return false;
         }
@@ -84,5 +84,10 @@ public class TextMessage {
      */
     public Date getSendDate() {
         return sendDate;
+    }
+
+
+    public String toString() {
+        return message + "\n" + sendDate.toString();
     }
 }
