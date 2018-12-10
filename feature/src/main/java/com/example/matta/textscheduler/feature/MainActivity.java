@@ -28,6 +28,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private boolean onMainLayout;
+    private TextView permissionError = (TextView) findViewById(R.id.noPermission);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (onMainLayout) {
                     upDateList();
+                    if (!hasPermission) {
+                        permissionError.setText("app does not have permission to send texts");
+                    }
                 }
             }
         };
         updateTextsTimer.scheduleAtFixedRate(countSeconds, 0, 5000);
-
 
 
     }
@@ -122,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText minuteInput;
     private EditText timeFrameInput;
     private TextView errorMessage;
+
+
+
 
 
     public void scheduleMessage(View view)
