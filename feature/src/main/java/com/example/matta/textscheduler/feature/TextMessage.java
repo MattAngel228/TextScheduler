@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 import android.telephony.SmsManager;
+import android.widget.TextView;
 
 /**
  * Class to manage the creation of Text Messages being sent.
@@ -88,6 +89,13 @@ public class TextMessage {
 
 
     public String toString() {
-        return message + "\n" + sendDate.toString();
+        return "Number: " + parseNum(phoneNumber) + "\n" + "Message: " + message + "\n" + "Date to Send: " + sendDate.toString() + "\n" + "   ";
+    }
+
+    public String parseNum(String phoneNumber) {
+        String first = phoneNumber.substring(0,2);
+        String second = phoneNumber.substring(3,5);
+        String third = phoneNumber.substring(6,9);
+        return "(" + first + ") " + second + "-" + third;
     }
 }
