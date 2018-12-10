@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onMainLayout;
     public static boolean hasPermission = false;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermission();
 
 
-        //udpadte list of texts
+        //update list of texts
         Timer updateTextsTimer = new Timer();
         TimerTask countSeconds = new TimerTask() {
             @Override
@@ -46,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
 
     public void requestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText messageInput;
     private EditText hourInput;
     private EditText minuteInput;
-    private EditText timeFrameInput;
     private TextView errorMessage;
 
 
@@ -126,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
     {
         setContentView(R.layout.add_textmessage);
         onMainLayout = false;
-        dateInput = (EditText) findViewById(R.id.editDate);
-        numberInput = (EditText) findViewById(R.id.editNumber);
-        messageInput = (EditText) findViewById(R.id.editMessage);
-        hourInput = (EditText) findViewById(R.id.editHour);
-        minuteInput = (EditText) findViewById(R.id.editMinute);
-        amORpm = (Switch) findViewById(R.id.switch1);
-        errorMessage = (TextView) findViewById(R.id.errorMessage);
+        dateInput = findViewById(R.id.editDate);
+        numberInput = findViewById(R.id.editNumber);
+        messageInput = findViewById(R.id.editMessage);
+        hourInput = findViewById(R.id.editHour);
+        minuteInput = findViewById(R.id.editMinute);
+        amORpm = findViewById(R.id.switch1);
+        errorMessage = findViewById(R.id.errorMessage);
 
 
     }
@@ -151,12 +150,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
             minute = Integer.valueOf(minuteInput.getText().toString());
-            isPM = (boolean) amORpm.isChecked();
+            isPM = amORpm.isChecked();
             if (isPM) {
                 hour += 12;
             }
         } catch (Exception e) {
-            //time is invalid
             errorMessage.setText("Time is invalid");
             error = true;
         }
@@ -195,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
                 onMainLayout = true;
                 upDateList();
             }
-
-
         }
 
     }
