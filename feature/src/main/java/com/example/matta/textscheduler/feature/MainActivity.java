@@ -103,32 +103,57 @@ public class MainActivity extends AppCompatActivity {
         Button delete2 = findViewById(R.id.delete2);
         Button delete3 = findViewById(R.id.delete3);
         Button delete4 = findViewById(R.id.delete4);
+        Button delete5 = findViewById(R.id.delete5);
+        Button delete6 = findViewById(R.id.delete6);
         TextView deleteMessage = findViewById(R.id.deleteMessages);
 
-
-        if (TextMessage.toSend.size() >= 4) {
+        if (TextMessage.toSend.size() >= 6) {
             delete1.setVisibility(View.VISIBLE);
             delete2.setVisibility(View.VISIBLE);
             delete3.setVisibility(View.VISIBLE);
             delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.VISIBLE);
+            delete6.setVisibility(View.VISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 5) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.VISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 4) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
             deleteMessage.setVisibility(View.VISIBLE);
         } else if (TextMessage.toSend.size() >= 3) {
             delete1.setVisibility(View.VISIBLE);
             delete2.setVisibility(View.VISIBLE);
             delete3.setVisibility(View.VISIBLE);
             delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
             deleteMessage.setVisibility(View.VISIBLE);
         } else if (TextMessage.toSend.size() >= 2) {
             delete1.setVisibility(View.VISIBLE);
             delete2.setVisibility(View.VISIBLE);
             delete3.setVisibility(View.INVISIBLE);
             delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
             deleteMessage.setVisibility(View.VISIBLE);
         } else if (TextMessage.toSend.size() >= 1) {
             delete1.setVisibility(View.VISIBLE);
             delete2.setVisibility(View.INVISIBLE);
             delete3.setVisibility(View.INVISIBLE);
             delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
             deleteMessage.setVisibility(View.VISIBLE);
         } else {
             delete1.setVisibility(View.INVISIBLE);
@@ -183,6 +208,26 @@ public class MainActivity extends AppCompatActivity {
     public void deleteFourth(View view) {
         if (TextMessage.toSend.size() >= 4) {
             TextMessage.toSend.remove(3);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteFifth(View view) {
+        if (TextMessage.toSend.size() >= 5) {
+            TextMessage.toSend.remove(4);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteSixth(View view) {
+        if (TextMessage.toSend.size() >= 6) {
+            TextMessage.toSend.remove(5);
         }
         try {
             upDateList();

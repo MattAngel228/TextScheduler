@@ -11,6 +11,8 @@
     <string name="delete_2"> </string>
     <string name="delete_3"> </string>
     <string name="delete_4"> </string>
+    <string name="delete_5"> </string>
+    <string name="delete_6"> </string>
 
     <string name="number">number</string>
     <string name="date">date(DD/MM/YYYY)</string>
