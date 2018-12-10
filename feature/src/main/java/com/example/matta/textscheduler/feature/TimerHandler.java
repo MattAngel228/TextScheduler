@@ -1,4 +1,6 @@
 package com.example.matta.textscheduler.feature;
+import android.widget.TextView;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +20,6 @@ public class TimerHandler {
                 TextHandler.checkMessage();
             }
         };
-        timer.schedule(timerTask, 60000);
+        timer.scheduleAtFixedRate(timerTask, 0, 10000);
     }
 }
