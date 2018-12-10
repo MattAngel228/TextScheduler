@@ -50,7 +50,6 @@ public class TextMessage {
      */
     public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
         Date current = new Date();
-        //Invalid ranges
         try {
             Date testDate = new Date(year, month - 1, day, hour, minute);
         } catch (Exception e) {
@@ -71,8 +70,10 @@ public class TextMessage {
      * @param source Text Message object being sent.
      */
     public static void sendMessage(TextMessage source) {
-        SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage(source.phoneNumber, null, source.message, null, null);
+        if (MainActivity.hasPermission) {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(source.phoneNumber, null, source.message, null, null);
+        }
     }
 
     /**
@@ -82,6 +83,8 @@ public class TextMessage {
     public Date getSendDate() {
         return sendDate;
     }
+
+    public String getMessage() {return message;}
 
 
     public String toString() {

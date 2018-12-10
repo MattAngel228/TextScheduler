@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         for (TextMessage message : TextMessage.toSend) {
             allMessages += message.toString() + "\n";
         }
+        allMessages += "\n\nYou have " + TextMessage.toSend.size() + " messages scheduled";
         messageDisplay.setText(allMessages);
     }
 

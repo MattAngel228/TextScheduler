@@ -25,11 +25,15 @@ public class TextHandler {
         if (list.size() == 0) {
             list.add(toAdd);
             return;
-        }
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getSendDate().compareTo(toAdd.getSendDate()) <= 0) {
-                list.add(i, toAdd);
-                break;
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getSendDate().equals(toAdd.getSendDate()) && list.get(i).getMessage().equals(toAdd.getMessage())) {
+                    return;
+                }
+                if (list.get(i).getSendDate().compareTo(toAdd.getSendDate()) >= 0) {
+                    list.add(i, toAdd);
+                    return;
+                }
             }
         }
     }
