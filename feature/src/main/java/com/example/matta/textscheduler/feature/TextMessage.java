@@ -50,19 +50,16 @@ public class TextMessage {
      */
     public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
         Date current = new Date();
-        int numeric;
+        long numeric;
         //Invalid ranges
         try {
             Date testDate = new Date(year, month - 1, day, hour, minute);
-            numeric = Integer.parseInt(phoneNumber);
+            numeric = Long.parseLong(phoneNumber);
         } catch (Exception e) {
             return false;
         }
         Date setDate = new Date(year, month - 1, day, hour, minute);
-        if (message == null || phoneNumber.length() != 10) {
-            return false;
-        //Date in the past.
-        } else if (setDate.before(current)) {
+        if (setDate.before(current)) {
             return false;
         }
         new TextMessage(year, month - 1, day, hour, minute, phoneNumber, message);
