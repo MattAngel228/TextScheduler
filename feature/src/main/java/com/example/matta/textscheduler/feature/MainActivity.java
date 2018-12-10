@@ -6,9 +6,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ListView;
 //Change
 import java.util.List;
 import java.util.ArrayList;
@@ -17,37 +19,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    public String test = "Test";
 
-    private TextView mTextMessage;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            int id = item.getItemId();
-
-            /*
-            mTextMessage.setText(R.string.title_schedule);
-            return true;
-            *///
-            /*
-            if (id == R.id.navigation_home) {
-                mTextMessage.setText(R.string.title_home);
-                return true;
-            } else if (id == R.id.navigation_dashboard) {
-                mTextMessage.setText(R.string.title_dashboard);
-                return true;
-            } else if (id == R.id.navigation_notifications) {
-                mTextMessage.setText(R.string.title_notifications);
-                return true;
-            }
-            */
-            return false;
-        }
-    };
+    private TextView messageDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +28,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TimerHandler.startTimer();
 
+
+
+
+        //setting up list of text
+         String allMessages = "";
+         for (TextMessage message : TextMessage.toSend) {
+             allMessages += message.toString() + "\n";
+         }
+         messageDisplay = (TextView) findViewById(R.id.messages);
+         messageDisplay.setText(allMessages);
+
+
+
         //mTextMessage = (TextView) findViewById(R.id.message);
-        //BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+
+    public void upDateList() {
+        String allMessages = "";
+        for (TextMessage message : TextMessage.toSend) {
+            allMessages += message.toString() + "\n";
+        }
+        messageDisplay = (TextView) findViewById(R.id.messages);
+        messageDisplay.setText(allMessages);
     }
 
     private int day, month, year, hour, minute;
@@ -86,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         amORpm = (Switch) findViewById(R.id.switch1);
         errorMessage = (TextView) findViewById(R.id.errorMessage);
 
+
     }
     public void saveMessage(View view) {
 
@@ -100,15 +95,13 @@ public class MainActivity extends AppCompatActivity {
             errorMessage.setText("Date is invalid");
             error = true;
         }
+        year = year - 1900;
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
             minute = Integer.valueOf(hourInput.getText().toString());
             isPM = (boolean) amORpm.isChecked();
             if (isPM) {
                 hour += 12;
-                if (hour == 24) {
-                    hour = 0;
-                }
             }
         } catch (Exception e) {
             //time is invalid
@@ -116,9 +109,16 @@ public class MainActivity extends AppCompatActivity {
             error = true;
         }
 
+
         number = numberInput.getText().toString();
-        if (number.length() == 0) {
-            errorMessage.setText("Number is invalid");
+        if (number.length() != 10) {
+            errorMessage.setText("Number must be ten digits");
+            error = true;
+        }
+        try {
+            long numeric = Long.parseLong(numberInput.getText().toString());
+        } catch(Exception e) {
+            errorMessage.setText("Number is not a number");
             error = true;
         }
 
@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        //af
+
+
         if (!error) {
             //make it into a text message
             if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
@@ -137,17 +140,16 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 TextMessage.create(year, month, day, hour, minute, number, message);
                 setContentView(R.layout.activity_main);
+                upDateList();
             }
 
 
-        } else {
-            //display error
-            errorMessage.setVisibility(View.VISIBLE);
         }
 
     }
     public void cancelMessage(View view) {
         setContentView(R.layout.activity_main);
+        upDateList();
     }
 
 

@@ -82,4 +82,9 @@ public class TextMessage {
     public Date getSendDate() {
         return sendDate;
     }
+
+
+    public String toString() {
+        return message + "\n" + sendDate.toString();
+    }
 }
