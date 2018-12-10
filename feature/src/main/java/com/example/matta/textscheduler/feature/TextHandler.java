@@ -35,6 +35,7 @@ public class TextHandler {
                     return;
                 }
             }
+            list.add(list.size(), toAdd);
         }
     }
 

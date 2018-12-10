@@ -34,15 +34,11 @@ public class MainActivity extends AppCompatActivity {
         TimerTask countSeconds = new TimerTask() {
             @Override
             public void run() {
-                if (onMainLayout) {
+                try {
                     upDateList();
                     requestPermission();
-                    /**
-                    if (!hasPermission) {
-                        TextView permissionError = (TextView) findViewById(R.id.noPermission);
-                        permissionError.setText("app does not have permission to send texts");
-                    }
-                     **/
+                } catch (Exception e) {
+
                 }
             }
         };
@@ -105,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
         allMessages += "\n\nYou have " + TextMessage.toSend.size() + " messages scheduled";
         messageDisplay.setText(allMessages);
+
     }
 
     private int day, month, year, hour, minute;
@@ -205,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void cancelMessage(View view) {
         setContentView(R.layout.activity_main);
+        upDateList();
         onMainLayout = true;
     }
 
