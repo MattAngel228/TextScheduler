@@ -1,9 +1,14 @@
 package com.example.matta.textscheduler.feature;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.SmsManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -11,6 +16,9 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.Toast;
+import java.util.Timer;
+import java.util.TimerTask;
 //Change
 import java.util.List;
 import java.util.ArrayList;
@@ -19,38 +27,84 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private TextView messageDisplay;
+    private boolean onMainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        onMainLayout = true;
         TimerHandler.startTimer();
+        requestPermission();
+
+
+        //udpadte list of texts
+        Timer updateTextsTimer = new Timer();
+        TimerTask countSeconds = new TimerTask() {
+            @Override
+            public void run() {
+                if (onMainLayout) {
+                    upDateList();
+                }
+            }
+        };
+        updateTextsTimer.scheduleAtFixedRate(countSeconds, 0, 5000);
 
 
 
+    }
 
-        //setting up list of text
-         String allMessages = "";
-         for (TextMessage message : TextMessage.toSend) {
-             allMessages += message.toString() + "\n";
-         }
-         messageDisplay = (TextView) findViewById(R.id.messages);
-         messageDisplay.setText(allMessages);
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
 
+    public void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
 
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
+            }
+        }
+    }
 
-        //mTextMessage = (TextView) findViewById(R.id.message);
+    public static boolean hasPermission = false;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    SmsManager smsManager = SmsManager.getDefault();
+
+                    hasPermission = true;
+
+                    //smsManager.sendTextMessage(phoneNo, null, message, null, null);
+                   // Toast.makeText(getApplicationContext(), "SMS sent.",
+                          //  Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+
+                    hasPermission = false;
+                    return;
+                }
+            }
+        }
+
     }
 
 
+
+
+
+
+
     public void upDateList() {
-        String allMessages = "";
+        TextView messageDisplay = (TextView) findViewById(R.id.messages);
+        String allMessages = " ";
         for (TextMessage message : TextMessage.toSend) {
             allMessages += message.toString() + "\n";
         }
-        messageDisplay = (TextView) findViewById(R.id.messages);
         messageDisplay.setText(allMessages);
     }
 
@@ -72,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
     public void scheduleMessage(View view)
     {
         setContentView(R.layout.add_textmessage);
+        onMainLayout = false;
         dateInput = (EditText) findViewById(R.id.editDate);
         numberInput = (EditText) findViewById(R.id.editNumber);
         messageInput = (EditText) findViewById(R.id.editMessage);
@@ -138,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 TextMessage.create(year, month, day, hour, minute, number, message);
                 setContentView(R.layout.activity_main);
+                onMainLayout = true;
                 upDateList();
             }
 
@@ -147,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void cancelMessage(View view) {
         setContentView(R.layout.activity_main);
-        upDateList();
+        onMainLayout = true;
     }
 
 

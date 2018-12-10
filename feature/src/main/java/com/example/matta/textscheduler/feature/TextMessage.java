@@ -59,7 +59,7 @@ public class TextMessage {
         Date setDate = new Date(year, month - 1, day, hour, minute);
 
         //Date in the past.
-        if (setDate.before(current)) {
+        if (setDate.getTime() < current.getTime()) {
             return false;
         }
         new TextMessage(year, month - 1, day, hour, minute, phoneNumber, message);

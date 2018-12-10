@@ -1,5 +1,6 @@
 package com.example.matta.textscheduler.feature;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.Date;
@@ -40,13 +41,14 @@ public class TextHandler {
      */
     public static void checkMessage() {
         Date current = new Date();
-        if (TextMessage.toSend.size() > 0 && current == TextMessage.toSend.get(0).getSendDate()) {
+        if (TextMessage.toSend.size() > 0 && current.getTime() >= TextMessage.toSend.get(0).getSendDate().getTime()) {
             TextMessage.sendMessage(TextMessage.toSend.get(0));
             TextMessage.toSend.remove(0);
-            while (current == TextMessage.toSend.get(0).getSendDate()) {
+            while (TextMessage.toSend.size() > 0 && current.getTime() >= TextMessage.toSend.get(0).getSendDate().getTime()) {
                 TextMessage.sendMessage(TextMessage.toSend.get(0));
                 TextMessage.toSend.remove(0);
             }
         }
     }
+
 }
