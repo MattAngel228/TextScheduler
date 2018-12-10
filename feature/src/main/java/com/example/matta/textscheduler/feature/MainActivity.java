@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private boolean onMainLayout;
-    private TextView permissionError = (TextView) findViewById(R.id.noPermission);
+    public static boolean hasPermission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +36,13 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (onMainLayout) {
                     upDateList();
+                    requestPermission();
+                    /**
                     if (!hasPermission) {
+                        TextView permissionError = (TextView) findViewById(R.id.noPermission);
                         permissionError.setText("app does not have permission to send texts");
                     }
+                     **/
                 }
             }
         };
@@ -52,14 +56,15 @@ public class MainActivity extends AppCompatActivity {
     public void requestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
-
+                hasPermission = true;
             } else {
+                hasPermission = false;
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
             }
         }
     }
 
-    public static boolean hasPermission = false;
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {

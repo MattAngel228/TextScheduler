@@ -44,6 +44,7 @@ public class TextHandler {
      * Checks for every Text Message object that has the current sendDate.
      */
     public static void checkMessage() {
+
         Date current = new Date();
         if (TextMessage.toSend.size() > 0 && current.getTime() >= TextMessage.toSend.get(0).getSendDate().getTime()) {
             TextMessage.sendMessage(TextMessage.toSend.get(0));
@@ -53,6 +54,7 @@ public class TextHandler {
                 TextMessage.toSend.remove(0);
             }
         }
+
     }
 
 }

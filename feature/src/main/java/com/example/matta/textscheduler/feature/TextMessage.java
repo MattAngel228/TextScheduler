@@ -71,10 +71,10 @@ public class TextMessage {
      * @param source Text Message object being sent.
      */
     public static void sendMessage(TextMessage source) {
-        if (MainActivity.hasPermission) {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(source.phoneNumber, null, source.message, null, null);
-        }
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage(source.phoneNumber, null, source.message, null, null);
+
     }
 
     /**
@@ -93,9 +93,9 @@ public class TextMessage {
     }
 
     public String parseNum(String phoneNumber) {
-        String first = phoneNumber.substring(0,2);
-        String second = phoneNumber.substring(3,5);
-        String third = phoneNumber.substring(6,9);
+        String first = phoneNumber.substring(0,3);
+        String second = phoneNumber.substring(3,6);
+        String third = phoneNumber.substring(6);
         return "(" + first + ") " + second + "-" + third;
     }
 }
