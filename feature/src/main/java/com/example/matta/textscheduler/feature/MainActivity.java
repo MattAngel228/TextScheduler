@@ -3,27 +3,17 @@ package com.example.matta.textscheduler.feature;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ListView;
 import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
-//Change
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
