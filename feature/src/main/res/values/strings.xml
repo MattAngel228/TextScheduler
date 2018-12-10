@@ -6,6 +6,12 @@
 
     <string name="app_name">Text Schedule</string>
     <string name="schedule">schedule</string>
+    <string name="delete">press button \nto delete</string>
+    <string name="delete_1"> </string>
+    <string name="delete_2"> </string>
+    <string name="delete_3"> </string>
+    <string name="delete_4"> </string>
+
     <string name="number">number</string>
     <string name="date">date(DD/MM/YYYY)</string>
     <string name="message">message</string>

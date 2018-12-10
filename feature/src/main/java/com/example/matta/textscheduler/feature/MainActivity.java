@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void upDateList() {
         TextView messageDisplay = findViewById(R.id.messages);
         String allMessages = " ";
@@ -96,6 +98,45 @@ public class MainActivity extends AppCompatActivity {
         }
         allMessages += "\n\nYou have " + TextMessage.toSend.size() + " messages scheduled";
         messageDisplay.setText(allMessages);
+
+        Button delete1 = findViewById(R.id.delete1);
+        Button delete2 = findViewById(R.id.delete2);
+        Button delete3 = findViewById(R.id.delete3);
+        Button delete4 = findViewById(R.id.delete4);
+        TextView deleteMessage = findViewById(R.id.deleteMessages);
+
+
+        if (TextMessage.toSend.size() >= 4) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 3) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 2) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 1) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.INVISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else {
+            delete1.setVisibility(View.INVISIBLE);
+            delete2.setVisibility(View.INVISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.INVISIBLE);
+        }
 
     }
 
@@ -107,6 +148,50 @@ public class MainActivity extends AppCompatActivity {
     private EditText hourInput;
     private EditText minuteInput;
     private TextView errorMessage;
+
+
+    public void deleteFirst(View view) {
+        if (TextMessage.toSend.size() >= 1) {
+            TextMessage.toSend.remove(0);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteSecond(View view) {
+        if (TextMessage.toSend.size() >= 2) {
+            TextMessage.toSend.remove(1);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteThird(View view) {
+        if (TextMessage.toSend.size() >= 3) {
+            TextMessage.toSend.remove(2);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteFourth(View view) {
+        if (TextMessage.toSend.size() >= 4) {
+            TextMessage.toSend.remove(3);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+
+
 
 
     //on schedule button from main_activity
