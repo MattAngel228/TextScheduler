@@ -16,4 +16,13 @@
     <string name="switchOption1">AM</string>
     <string name="switchOption2">PM</string>
 
+
+    //errror message strings
+    <string name="errorMessage">Message is invalid</string>
+    <string name="errorTime">Time is invalid</string>
+    <string name="errorDate">Date is invalid</string>
+    <string name="errorNumberDigits">Number must be ten digits</string>
+    <string name="errorNumberNumber">Number is not a number</string>
+    <string name="errorPast">Date must be in the future</string>
+
 </resources>

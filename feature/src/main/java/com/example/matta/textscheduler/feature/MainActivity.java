@@ -88,13 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     public void upDateList() {
-        TextView messageDisplay = (TextView) findViewById(R.id.messages);
+        TextView messageDisplay = findViewById(R.id.messages);
         String allMessages = " ";
         for (TextMessage message : TextMessage.toSend) {
             allMessages += message.toString() + "\n";
@@ -105,11 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int day, month, year, hour, minute;
-    private boolean isPM;
-    private String dateGiven;
     private Switch amORpm;
-    private String number;
-    private String message;
     private EditText dateInput;
     private EditText numberInput;
     private EditText messageInput;
@@ -118,9 +109,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView errorMessage;
 
 
-
-
-
+    //on schedule button from main_activity
     public void scheduleMessage(View view)
     {
         setContentView(R.layout.add_textmessage);
@@ -135,58 +124,60 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    //on save button from add_textMessage
     public void saveMessage(View view) {
 
         boolean error = false;
 
-        //message
-        message = messageInput.getText().toString();
+        //get message input
+        String message = messageInput.getText().toString();
         if (message.length() == 0) {
-            errorMessage.setText("Message is invalid");
+            errorMessage.setText(R.string.errorMessage);
             error = true;
         }
 
-        //time
+        //get time input
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
             minute = Integer.valueOf(minuteInput.getText().toString());
-            isPM = amORpm.isChecked();
+            boolean isPM = amORpm.isChecked();
             if (isPM) {
                 hour += 12;
             }
         } catch (Exception e) {
-            errorMessage.setText("Time is invalid");
+            errorMessage.setText(R.string.errorTime);
             error = true;
         }
 
-        //date
-        dateGiven = dateInput.getText().toString();
+        //get date input
+        String dateGiven = dateInput.getText().toString();
         try {
             day = Integer.valueOf(dateGiven.substring(0,2));
             month = Integer.valueOf(dateGiven.substring(3,5));
             year = Integer.valueOf(dateGiven.substring(6));
         } catch (Exception e) {
-            errorMessage.setText("Date is invalid");
+            errorMessage.setText(R.string.errorDate);
             error = true;
         }
 
-        //number
-        number = numberInput.getText().toString();
+        //get number input
+        String number = numberInput.getText().toString();
         if (number.length() != 10) {
-            errorMessage.setText("Number must be ten digits");
+            errorMessage.setText(R.string.errorNumberDigits);
             error = true;
         }
         try {
             long numeric = Long.parseLong(numberInput.getText().toString());
         } catch(Exception e) {
-            errorMessage.setText("Number is not a number");
+            errorMessage.setText(R.string.errorNumberNumber);
             error = true;
         }
 
         if (!error) {
             //make it into a text message
             if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
-                errorMessage.setText("Date is already past");
+                errorMessage.setText(R.string.errorPast);
             } else {
                 TextMessage.create(year, month, day, hour, minute, number, message);
                 setContentView(R.layout.activity_main);
@@ -196,7 +187,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    //on cancel button from add_textMessage
     public void cancelMessage(View view) {
+        //return to main_activity layout
         setContentView(R.layout.activity_main);
         upDateList();
         onMainLayout = true;
