@@ -86,19 +86,17 @@ public class MainActivity extends AppCompatActivity {
 
         boolean error = false;
 
-        dateGiven = dateInput.getText().toString();
-        try {
-            day = Integer.valueOf(dateGiven.substring(0,2));
-            month = Integer.valueOf(dateGiven.substring(3,5));
-            year = Integer.valueOf(dateGiven.substring(6));
-        } catch (Exception e) {
-            errorMessage.setText("Date is invalid");
+        //message
+        message = messageInput.getText().toString();
+        if (message.length() == 0) {
+            errorMessage.setText("Message is invalid");
             error = true;
         }
-        year = year - 1900;
+
+        //time
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
-            minute = Integer.valueOf(hourInput.getText().toString());
+            minute = Integer.valueOf(minuteInput.getText().toString());
             isPM = (boolean) amORpm.isChecked();
             if (isPM) {
                 hour += 12;
@@ -109,7 +107,18 @@ public class MainActivity extends AppCompatActivity {
             error = true;
         }
 
+        //date
+        dateGiven = dateInput.getText().toString();
+        try {
+            day = Integer.valueOf(dateGiven.substring(0,2));
+            month = Integer.valueOf(dateGiven.substring(3,5));
+            year = Integer.valueOf(dateGiven.substring(6));
+        } catch (Exception e) {
+            errorMessage.setText("Date is invalid");
+            error = true;
+        }
 
+        //number
         number = numberInput.getText().toString();
         if (number.length() != 10) {
             errorMessage.setText("Number must be ten digits");
@@ -122,21 +131,10 @@ public class MainActivity extends AppCompatActivity {
             error = true;
         }
 
-        message = messageInput.getText().toString();
-        if (message.length() == 0) {
-            errorMessage.setText("Message is invalid");
-            error = true;
-        }
-
-
-
-        //af
-
-
         if (!error) {
             //make it into a text message
             if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
-                errorMessage.setText("Invalid input");
+                errorMessage.setText("Date is already past");
             } else {
                 TextMessage.create(year, month, day, hour, minute, number, message);
                 setContentView(R.layout.activity_main);
