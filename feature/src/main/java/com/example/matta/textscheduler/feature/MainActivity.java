@@ -160,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
             delete2.setVisibility(View.INVISIBLE);
             delete3.setVisibility(View.INVISIBLE);
             delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
             deleteMessage.setVisibility(View.INVISIBLE);
         }
 

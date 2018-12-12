@@ -25,7 +25,7 @@
     <string name="switchOption2">PM</string>
 
 
-    //errror message strings
+    //error message strings
     <string name="errorMessage">Message is invalid</string>
     <string name="errorTime">Time is invalid</string>
     <string name="errorDate">Date is invalid</string>
