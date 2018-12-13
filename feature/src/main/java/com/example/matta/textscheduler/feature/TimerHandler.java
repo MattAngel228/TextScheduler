@@ -20,6 +20,6 @@ public class TimerHandler {
                 TextHandler.checkMessage();
             }
         };
-        timer.scheduleAtFixedRate(timerTask, 0, 10000);
+        timer.scheduleAtFixedRate(timerTask, 0, 5000);
     }
 }

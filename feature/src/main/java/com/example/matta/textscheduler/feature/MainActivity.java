@@ -8,11 +8,15 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -292,6 +296,17 @@ public class MainActivity extends AppCompatActivity {
             errorMessage.setText(R.string.errorDate);
             error = true;
         }
+
+
+        //date is in past
+        Calendar setDate = Calendar.getInstance();
+        setDate.set(year, month - 1, day, hour, minute);
+        Calendar current = Calendar.getInstance();
+        if (setDate.compareTo(current) < 0) {
+            errorMessage.setText(R.string.errorPast);
+            error = true;
+        }
+//8157576660
 
         //get number input
         String number = numberInput.getText().toString();
