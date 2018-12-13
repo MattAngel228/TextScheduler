@@ -17,6 +17,7 @@ public class TextMessage {
     private int hour;
     private int minute;
     private Date sendDate;
+    private Calendar sendCalendar;
     private String phoneNumber;
     private String message;
     public static List<TextMessage> toSend = new ArrayList<TextMessage>();
@@ -36,6 +37,13 @@ public class TextMessage {
         this.phoneNumber = phoneNumber;
         this.message = message;
         TextHandler.addToList(this,toSend);
+    }
+
+    public TextMessage(Calendar setDate, String phoneNumber, String message){
+        this.sendCalendar = setDate;
+        this.phoneNumber = phoneNumber;
+        this.message = message;
+        TextHandler.addToListCalendar(this,toSend);
     }
 
     /**
@@ -66,6 +74,10 @@ public class TextMessage {
         return true;
     }
 
+    public static void create(Calendar setDate, String phoneNumber, String message) {
+        new TextMessage(setDate, phoneNumber, message);
+    }
+
     /**
      * Sends message.
      * @param source Text Message object being sent.
@@ -84,6 +96,8 @@ public class TextMessage {
     public Date getSendDate() {
         return sendDate;
     }
+
+    public Calendar getSendCalendar() {return sendCalendar;}
 
     /**
      * Gets a message from a Text Message object

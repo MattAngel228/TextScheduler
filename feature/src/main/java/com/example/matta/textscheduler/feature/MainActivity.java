@@ -306,7 +306,6 @@ public class MainActivity extends AppCompatActivity {
             errorMessage.setText(R.string.errorPast);
             error = true;
         }
-//8157576660
 
         //get number input
         String number = numberInput.getText().toString();
