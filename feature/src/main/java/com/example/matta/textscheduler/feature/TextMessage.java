@@ -85,13 +85,25 @@ public class TextMessage {
         return sendDate;
     }
 
+    /**
+     * Gets a message from a Text Message object
+     * @return message
+     */
     public String getMessage() {return message;}
 
-
+    /**
+     * Creates the display for text message objects in the list.
+     * @return String output
+     */
     public String toString() {
         return "Number: " + parseNum(phoneNumber) + "\n" + "Message: " + message + "\n" + "Date to Send: " + sendDate.toString() + "\n" + "   ";
     }
 
+    /**
+     * Takes a phone number string (##########) and returns it in a phone number format ((###) ###-####)).
+     * @param phoneNumber String of numbers
+     * @return Formatted string
+     */
     public String parseNum(String phoneNumber) {
         String first = phoneNumber.substring(0,3);
         String second = phoneNumber.substring(3,6);
