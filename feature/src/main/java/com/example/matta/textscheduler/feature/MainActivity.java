@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean onMainLayout;
     public static boolean hasPermission = false;
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         requestPermission();
 
 
-        //udpadte list of texts
+        //update list of texts
         Timer updateTextsTimer = new Timer();
         TimerTask countSeconds = new TimerTask() {
             @Override
@@ -46,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
 
     public void requestPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -89,12 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     public void upDateList() {
-        TextView messageDisplay = (TextView) findViewById(R.id.messages);
+        TextView messageDisplay = findViewById(R.id.messages);
         String allMessages = " ";
         for (TextMessage message : TextMessage.toSend) {
             allMessages += message.toString() + "\n";
@@ -102,105 +99,230 @@ public class MainActivity extends AppCompatActivity {
         allMessages += "\n\nYou have " + TextMessage.toSend.size() + " messages scheduled";
         messageDisplay.setText(allMessages);
 
+        Button delete1 = findViewById(R.id.delete1);
+        Button delete2 = findViewById(R.id.delete2);
+        Button delete3 = findViewById(R.id.delete3);
+        Button delete4 = findViewById(R.id.delete4);
+        Button delete5 = findViewById(R.id.delete5);
+        Button delete6 = findViewById(R.id.delete6);
+        TextView deleteMessage = findViewById(R.id.deleteMessages);
+
+        if (TextMessage.toSend.size() >= 6) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.VISIBLE);
+            delete6.setVisibility(View.VISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 5) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.VISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 4) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.VISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 3) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.VISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 2) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.VISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else if (TextMessage.toSend.size() >= 1) {
+            delete1.setVisibility(View.VISIBLE);
+            delete2.setVisibility(View.INVISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.VISIBLE);
+        } else {
+            delete1.setVisibility(View.INVISIBLE);
+            delete2.setVisibility(View.INVISIBLE);
+            delete3.setVisibility(View.INVISIBLE);
+            delete4.setVisibility(View.INVISIBLE);
+            delete5.setVisibility(View.INVISIBLE);
+            delete6.setVisibility(View.INVISIBLE);
+            deleteMessage.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private int day, month, year, hour, minute;
-    private boolean isPM;
-    private String dateGiven;
     private Switch amORpm;
-    private String number;
-    private String message;
     private EditText dateInput;
     private EditText numberInput;
     private EditText messageInput;
     private EditText hourInput;
     private EditText minuteInput;
-    private EditText timeFrameInput;
     private TextView errorMessage;
 
 
+    public void deleteFirst(View view) {
+        if (TextMessage.toSend.size() >= 1) {
+            TextMessage.toSend.remove(0);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteSecond(View view) {
+        if (TextMessage.toSend.size() >= 2) {
+            TextMessage.toSend.remove(1);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteThird(View view) {
+        if (TextMessage.toSend.size() >= 3) {
+            TextMessage.toSend.remove(2);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteFourth(View view) {
+        if (TextMessage.toSend.size() >= 4) {
+            TextMessage.toSend.remove(3);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteFifth(View view) {
+        if (TextMessage.toSend.size() >= 5) {
+            TextMessage.toSend.remove(4);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
+    public void deleteSixth(View view) {
+        if (TextMessage.toSend.size() >= 6) {
+            TextMessage.toSend.remove(5);
+        }
+        try {
+            upDateList();
+        } catch (Exception e) {
+
+        }
+    }
 
 
 
+
+    //on schedule button from main_activity
     public void scheduleMessage(View view)
     {
         setContentView(R.layout.add_textmessage);
         onMainLayout = false;
-        dateInput = (EditText) findViewById(R.id.editDate);
-        numberInput = (EditText) findViewById(R.id.editNumber);
-        messageInput = (EditText) findViewById(R.id.editMessage);
-        hourInput = (EditText) findViewById(R.id.editHour);
-        minuteInput = (EditText) findViewById(R.id.editMinute);
-        amORpm = (Switch) findViewById(R.id.switch1);
-        errorMessage = (TextView) findViewById(R.id.errorMessage);
+        dateInput = findViewById(R.id.editDate);
+        numberInput = findViewById(R.id.editNumber);
+        messageInput = findViewById(R.id.editMessage);
+        hourInput = findViewById(R.id.editHour);
+        minuteInput = findViewById(R.id.editMinute);
+        amORpm = findViewById(R.id.switch1);
+        errorMessage = findViewById(R.id.errorMessage);
 
 
     }
+
+    //on save button from add_textMessage
     public void saveMessage(View view) {
 
         boolean error = false;
 
-        //message
-        message = messageInput.getText().toString();
+        //get message input
+        String message = messageInput.getText().toString();
         if (message.length() == 0) {
-            errorMessage.setText("Message is invalid");
+            errorMessage.setText(R.string.errorMessage);
             error = true;
         }
 
-        //time
+        //get time input
         try {
             hour = Integer.valueOf(hourInput.getText().toString());
             minute = Integer.valueOf(minuteInput.getText().toString());
-            isPM = (boolean) amORpm.isChecked();
+            boolean isPM = amORpm.isChecked();
             if (isPM) {
                 hour += 12;
             }
         } catch (Exception e) {
-            //time is invalid
-            errorMessage.setText("Time is invalid");
+            errorMessage.setText(R.string.errorTime);
             error = true;
         }
 
-        //date
-        dateGiven = dateInput.getText().toString();
+        //get date input
+        String dateGiven = dateInput.getText().toString();
         try {
             day = Integer.valueOf(dateGiven.substring(0,2));
             month = Integer.valueOf(dateGiven.substring(3,5));
             year = Integer.valueOf(dateGiven.substring(6));
         } catch (Exception e) {
-            errorMessage.setText("Date is invalid");
+            errorMessage.setText(R.string.errorDate);
             error = true;
         }
 
-        //number
-        number = numberInput.getText().toString();
+        //get number input
+        String number = numberInput.getText().toString();
         if (number.length() != 10) {
-            errorMessage.setText("Number must be ten digits");
+            errorMessage.setText(R.string.errorNumberDigits);
             error = true;
         }
         try {
             long numeric = Long.parseLong(numberInput.getText().toString());
         } catch(Exception e) {
-            errorMessage.setText("Number is not a number");
+            errorMessage.setText(R.string.errorNumberNumber);
             error = true;
         }
 
         if (!error) {
             //make it into a text message
             if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
-                errorMessage.setText("Date is already past");
+                errorMessage.setText(R.string.errorPast);
             } else {
                 TextMessage.create(year, month, day, hour, minute, number, message);
                 setContentView(R.layout.activity_main);
                 onMainLayout = true;
                 upDateList();
             }
-
-
         }
 
     }
+
+    //on cancel button from add_textMessage
     public void cancelMessage(View view) {
+        //return to main_activity layout
         setContentView(R.layout.activity_main);
         upDateList();
         onMainLayout = true;

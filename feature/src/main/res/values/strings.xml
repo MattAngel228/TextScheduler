@@ -6,6 +6,14 @@
 
     <string name="app_name">Text Schedule</string>
     <string name="schedule">schedule</string>
+    <string name="delete">press button \nto delete</string>
+    <string name="delete_1"> </string>
+    <string name="delete_2"> </string>
+    <string name="delete_3"> </string>
+    <string name="delete_4"> </string>
+    <string name="delete_5"> </string>
+    <string name="delete_6"> </string>
+
     <string name="number">number</string>
     <string name="date">date(DD/MM/YYYY)</string>
     <string name="message">message</string>
@@ -15,5 +23,14 @@
     <string name="minute">minute(37)</string>
     <string name="switchOption1">AM</string>
     <string name="switchOption2">PM</string>
+
+
+    //error message strings
+    <string name="errorMessage">Message is invalid</string>
+    <string name="errorTime">Time is invalid</string>
+    <string name="errorDate">Date is invalid</string>
+    <string name="errorNumberDigits">Number must be ten digits</string>
+    <string name="errorNumberNumber">Number is not a number</string>
+    <string name="errorPast">Date must be in the future</string>
 
 </resources>
