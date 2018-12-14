@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
 
         //date is in past
         Calendar setDate = Calendar.getInstance();
-        setDate.set(year, month - 1, day, hour, minute);
+        setDate.set(year, month - 1, day, hour, minute, 0);
         Calendar current = Calendar.getInstance();
         if (setDate.compareTo(current) < 0) {
             errorMessage.setText(R.string.errorPast);
@@ -322,14 +322,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (!error) {
             //make it into a text message
-            if (!TextMessage.create(year, month, day, hour, minute, number, message)) {
-                errorMessage.setText(R.string.errorPast);
-            } else {
-                TextMessage.create(year, month, day, hour, minute, number, message);
-                setContentView(R.layout.activity_main);
-                onMainLayout = true;
-                upDateList();
-            }
+            TextMessage.create(setDate, number, message);
+            setContentView(R.layout.activity_main);
+            onMainLayout = true;
+            upDateList();
         }
 
     }

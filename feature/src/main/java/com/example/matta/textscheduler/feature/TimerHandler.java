@@ -1,5 +1,4 @@
 package com.example.matta.textscheduler.feature;
-import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,7 +16,7 @@ public class TimerHandler {
         Timer timer = new Timer();
         TimerTask timerTask = new TimerTask() {
             public void run() {
-                TextHandler.checkMessage();
+                TextHandler.checkMessageCalendar();
             }
         };
         timer.scheduleAtFixedRate(timerTask, 0, 5000);

@@ -22,26 +22,6 @@ public class TextHandler {
      * @param toAdd Text Message object being added and sorted
      * @param list List the Text Message object is being added to.
      */
-    public static void addToList(TextMessage toAdd, List<TextMessage> list) {
-        if (list.size() == 0) {
-            list.add(toAdd);
-            return;
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getSendDate().equals(toAdd.getSendDate()) && list.get(i).getMessage().equals(toAdd.getMessage())) {
-                    return;
-                }
-                if (list.get(i).getSendDate().compareTo(toAdd.getSendDate()) >= 0) {
-                    list.add(i, toAdd);
-                    return;
-                }
-            }
-            list.add(list.size(), toAdd);
-        }
-    }
-
-
-
     public static void addToListCalendar(TextMessage toAdd, List<TextMessage> list) {
         if (list.size() == 0) {
             list.add(toAdd);
@@ -66,20 +46,6 @@ public class TextHandler {
      * If so, sends text and removes it from list.
      * Checks for every Text Message object that has the current sendDate.
      */
-    public static void checkMessage() {
-
-        Date current = new Date();
-        if (TextMessage.toSend.size() > 0 && current.getTime() >= TextMessage.toSend.get(0).getSendDate().getTime()) {
-            TextMessage.sendMessage(TextMessage.toSend.get(0));
-            TextMessage.toSend.remove(0);
-            while (TextMessage.toSend.size() > 0 && current.getTime() >= TextMessage.toSend.get(0).getSendDate().getTime()) {
-                TextMessage.sendMessage(TextMessage.toSend.get(0));
-                TextMessage.toSend.remove(0);
-            }
-        }
-
-    }
-
     public static void checkMessageCalendar() {
         Calendar current = Calendar.getInstance();
         while (TextMessage.toSend.size() > 0 && current.compareTo(TextMessage.toSend.get(0).getSendCalendar()) >= 0) {

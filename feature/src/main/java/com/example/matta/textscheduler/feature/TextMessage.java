@@ -1,22 +1,13 @@
 package com.example.matta.textscheduler.feature;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
 import java.util.List;
 import android.telephony.SmsManager;
-import android.widget.TextView;
 
 /**
  * Class to manage the creation of Text Messages being sent.
  */
 public class TextMessage {
-    private final int yearMod = 1900;
-    private int year;
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
-    private Date sendDate;
     private Calendar sendCalendar;
     private String phoneNumber;
     private String message;
@@ -24,21 +15,10 @@ public class TextMessage {
 
     /**
      * Constructor for text message.
-     * @param year Year to send text.
-     * @param month Month to send text (0-11).
-     * @param day Day to send text (1-31).
-     * @param hour Hour to send text (0-23).
-     * @param minute Minute to send text (0-59).
+     * @param setDate the calendar date the message is to be sent at
      * @param phoneNumber Phone number receiving the text (##########).
      * @param message Message being sent.
      */
-    public TextMessage(int year, int month, int day, int hour, int minute, String phoneNumber, String message){
-        this.sendDate = new Date(year - yearMod, month, day, hour, minute);
-        this.phoneNumber = phoneNumber;
-        this.message = message;
-        TextHandler.addToList(this,toSend);
-    }
-
     public TextMessage(Calendar setDate, String phoneNumber, String message){
         this.sendCalendar = setDate;
         this.phoneNumber = phoneNumber;
@@ -48,32 +28,10 @@ public class TextMessage {
 
     /**
      * Tests provided parameters. Creates a new Text Message object if parameters are valid.
-     * @param year Provided year (year - 1900).
-     * @param month Provided month (0-11).
-     * @param day Provided day (1-31).
-     * @param hour Provided hour (0-23).
-     * @param minute Provided minute (0-59).
+     * @param setDate the calendar date when the message is to be sent
      * @param phoneNumber Provided phone number "##########".
      * @param message Message.
-     * @return true if Text Message object was created, false if invalid parameter.
      */
-    public static boolean create(int year, int month, int day, int hour, int minute, String phoneNumber, String message) {
-        Date current = new Date();
-        try {
-            Date testDate = new Date(year, month - 1, day, hour, minute);
-        } catch (Exception e) {
-            return false;
-        }
-        Date setDate = new Date(year, month - 1, day, hour, minute);
-
-        //Date in the past.
-        if (setDate.getTime() < current.getTime()) {
-            return false;
-        }
-        new TextMessage(year, month - 1, day, hour, minute, phoneNumber, message);
-        return true;
-    }
-
     public static void create(Calendar setDate, String phoneNumber, String message) {
         new TextMessage(setDate, phoneNumber, message);
     }
@@ -89,13 +47,7 @@ public class TextMessage {
 
     }
 
-    /**
-     * Retrieves the send date of a Text Message object
-     * @return Intended send date.
-     */
-    public Date getSendDate() {
-        return sendDate;
-    }
+
 
     public Calendar getSendCalendar() {return sendCalendar;}
 
@@ -110,7 +62,7 @@ public class TextMessage {
      * @return String output
      */
     public String toString() {
-        return "Number: " + parseNum(phoneNumber) + "\n" + "Message: " + message + "\n" + "Date to Send: " + sendDate.toString() + "\n" + "   ";
+        return "Number: " + parseNum(phoneNumber) + "\n" + "Message: " + message + "\n" + "Date to Send: " + sendCalendar.getTime().toString() + "\n" + "   ";
     }
 
     /**
