@@ -1,31 +1,31 @@
 package com.example.matta.textscheduler.feature;
 
 import android.Manifest;
+import android.app.TimePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener  {
 
     private boolean onMainLayout;
     public static boolean hasPermission = false;
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS =0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    boolean timeSet;
 
     //on schedule button from main_activity
     public void scheduleMessage(View view)
@@ -253,13 +254,36 @@ public class MainActivity extends AppCompatActivity {
         dateInput = findViewById(R.id.editDate);
         numberInput = findViewById(R.id.editNumber);
         messageInput = findViewById(R.id.editMessage);
-        hourInput = findViewById(R.id.editHour);
-        minuteInput = findViewById(R.id.editMinute);
-        amORpm = findViewById(R.id.switch1);
         errorMessage = findViewById(R.id.errorMessage);
+        timerSetter = findViewById(R.id.timeSetButton);
+        timeSet = false;
+        timerSetter.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               DialogFragment timePiker = new TimePickerFragment();
+               timePiker.show(getSupportFragmentManager(), "time picker");
+           }
+        });
 
 
     }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minuteToSet) {
+        TextView timeAsString = (TextView)findViewById(R.id.displayTime);
+        if (minuteToSet < 10) {
+            timeAsString.setText(hourOfDay + ":0" + minuteToSet);
+        } else {
+            timeAsString.setText(hourOfDay + ":" + minuteToSet);
+        }
+        timeSet = true;
+        hour = hourOfDay;
+        minute = minuteToSet;
+    }
+
+
+
+    Button timerSetter;
 
     //on save button from add_textMessage
     public void saveMessage(View view) {
@@ -273,15 +297,7 @@ public class MainActivity extends AppCompatActivity {
             error = true;
         }
 
-        //get time input
-        try {
-            hour = Integer.valueOf(hourInput.getText().toString());
-            minute = Integer.valueOf(minuteInput.getText().toString());
-            boolean isPM = amORpm.isChecked();
-            if (isPM) {
-                hour += 12;
-            }
-        } catch (Exception e) {
+        if (!timeSet) {
             errorMessage.setText(R.string.errorTime);
             error = true;
         }
@@ -329,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
     //on cancel button from add_textMessage
     public void cancelMessage(View view) {
