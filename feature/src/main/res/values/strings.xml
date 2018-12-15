@@ -19,13 +19,15 @@
     <string name="message">message</string>
     <string name="Cancel">Cancel</string>
     <string name="Save">Save</string>
-    <string name="change_time_button">edit time</string>
+    <string name="change_time_button">select time</string>
+    <string name="set_date">select date</string>
+    <string name="displayDate">Sending on\t\t\t\t\t\t\t\t\t\t\t\t\t at</string>
 
 
     //error message strings
     <string name="errorMessage">Message is invalid</string>
     <string name="errorTime">Must Set A Time</string>
-    <string name="errorDate">Date is invalid</string>
+    <string name="errorDate">Must Set A Date</string>
     <string name="errorNumberDigits">Number must be ten digits</string>
     <string name="errorNumberNumber">Number is not a number</string>
     <string name="errorPast">Date must be in the future</string>

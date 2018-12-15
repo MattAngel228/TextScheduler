@@ -1,6 +1,7 @@
 package com.example.matta.textscheduler.feature;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,17 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener  {
+public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     private boolean onMainLayout;
     public static boolean hasPermission = false;
@@ -172,12 +175,9 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
     }
 
     private int day, month, year, hour, minute;
-    private Switch amORpm;
     private EditText dateInput;
     private EditText numberInput;
     private EditText messageInput;
-    private EditText hourInput;
-    private EditText minuteInput;
     private TextView errorMessage;
 
 
@@ -245,18 +245,22 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
 
     boolean timeSet;
+    boolean dateSet;
+    Button timerSetter;
+    Button dateSetter;
 
     //on schedule button from main_activity
     public void scheduleMessage(View view)
     {
         setContentView(R.layout.add_textmessage);
         onMainLayout = false;
-        dateInput = findViewById(R.id.editDate);
         numberInput = findViewById(R.id.editNumber);
         messageInput = findViewById(R.id.editMessage);
         errorMessage = findViewById(R.id.errorMessage);
         timerSetter = findViewById(R.id.timeSetButton);
+        dateSetter = findViewById(R.id.dateSetButton);
         timeSet = false;
+        dateSet = false;
         timerSetter.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
@@ -265,25 +269,44 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
            }
         });
 
+        dateSetter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
 
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minuteToSet) {
-        TextView timeAsString = (TextView)findViewById(R.id.displayTime);
+        timerSetter = findViewById(R.id.timeSetButton);
         if (minuteToSet < 10) {
-            timeAsString.setText(hourOfDay + ":0" + minuteToSet);
+            timerSetter.setText(hourOfDay + ":0" + minuteToSet);
         } else {
-            timeAsString.setText(hourOfDay + ":" + minuteToSet);
+            timerSetter.setText(hourOfDay + ":" + minuteToSet);
         }
         timeSet = true;
         hour = hourOfDay;
         minute = minuteToSet;
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int setYear, int setMonth, int setDayOfMonth) {
+        year = setYear;
+        month = setMonth;
+        day = setDayOfMonth;
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, day);
+        String dateString = DateFormat.getDateInstance().format(c.getTime());
+        dateSet = true;
+        dateSetter = findViewById(R.id.dateSetButton);
+        dateSetter.setText(dateString);
 
+    }
 
-    Button timerSetter;
 
     //on save button from add_textMessage
     public void saveMessage(View view) {
@@ -297,30 +320,23 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
             error = true;
         }
 
+
+        //date is in past
+        Calendar setDate = Calendar.getInstance();
+        setDate.set(year, month, day, hour, minute, 0);
+        Calendar current = Calendar.getInstance();
+        if (setDate.compareTo(current) < 0) {
+            errorMessage.setText(R.string.errorPast);
+            error = true;
+        }
+
         if (!timeSet) {
             errorMessage.setText(R.string.errorTime);
             error = true;
         }
 
-        //get date input
-        String dateGiven = dateInput.getText().toString();
-        try {
-            day = Integer.valueOf(dateGiven.substring(0,2));
-            month = Integer.valueOf(dateGiven.substring(3,5));
-            year = Integer.valueOf(dateGiven.substring(6));
-        } catch (Exception e) {
+        if (!dateSet) {
             errorMessage.setText(R.string.errorDate);
-            error = true;
-        }
-
-
-        //date is in past
-        Calendar setDate = Calendar.getInstance();
-        setDate.set(year, month - 1, day, hour, minute, 0);
-        Calendar current = Calendar.getInstance();
-        if (setDate.compareTo(current) < 0) {
-            errorMessage.setText(R.string.errorPast);
-            error = true;
         }
 
         //get number input
